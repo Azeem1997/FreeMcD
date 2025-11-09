@@ -1,0 +1,24 @@
+[
+  {
+    "transactionId": "T014",
+    "customerId": null,
+    "customerName": "Sophia Adams",
+    "purchaseDate": "2024-01-01",
+    "productPurchased": "Speaker",
+    "price": "abc"
+  },
+  {
+    "transactionId": "T015",
+    "customerName": "Mark Wilson",
+    "productPurchased": "Router"
+  },
+  {},
+  {
+    "transactionId": "T016",
+    "customerId": "C009",
+    "customerName": "Leo Brooks",
+    "purchaseDate": "",
+    "productPurchased": "Webcam",
+    "price": 120
+  }
+]

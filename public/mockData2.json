@@ -1,0 +1,34 @@
+[
+  {
+    "transactionId": "T004",
+    "customerId": "C001",
+    "customerName": "John Doe",
+    "purchaseDate": "2023-12-25",
+    "productPurchased": "Mouse",
+    "price": 25
+  },
+  {
+    "transactionId": "T005",
+    "customerId": "C002",
+    "customerName": "Jane Smith",
+    "purchaseDate": "2024-01-12",
+    "productPurchased": "Keyboard",
+    "price": 55.5
+  },
+  {
+    "transactionId": "T006",
+    "customerId": "C003",
+    "customerName": "",
+    "purchaseDate": "2024-02-18",
+    "productPurchased": "Monitor",
+    "price": 180
+  },
+  {
+    "transactionId": "T007",
+    "customerId": "C004",
+    "customerName": "David Brown",
+    "purchaseDate": "",
+    "productPurchased": "Headphones",
+    "price": 90
+  }
+]
