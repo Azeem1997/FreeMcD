@@ -2,6 +2,7 @@ import React from "react";
 import TransactionsTable from "./TransactionTable";
 import MonthlyRewardsTable from "./MonthlyRewardsTable";
 import TotalRewardsTable from "./TotalRewardsTable";
+import AIAssistant from "./AiAssistant";
 
 const Tabs = ({ transactions, rewards, totals, loading }) => {
   return (
@@ -10,12 +11,12 @@ const Tabs = ({ transactions, rewards, totals, loading }) => {
         <div className="nav nav-tabs" id="nav-tab" role="tablist">
           <button
             className="nav-link active"
-            id="nav-home-tab"
+            id="nav-transactions-tab"
             data-bs-toggle="tab"
-            data-bs-target="#nav-home"
+            data-bs-target="#nav-transactions"
             type="button"
             role="tab"
-            aria-controls="nav-home"
+            aria-controls="nav-transactions"
             aria-selected="true"
           >
             Transactions
@@ -23,12 +24,12 @@ const Tabs = ({ transactions, rewards, totals, loading }) => {
 
           <button
             className="nav-link"
-            id="nav-profile-tab"
+            id="nav-monthly-tab"
             data-bs-toggle="tab"
-            data-bs-target="#nav-profile"
+            data-bs-target="#nav-monthly"
             type="button"
             role="tab"
-            aria-controls="nav-profile"
+            aria-controls="nav-monthly"
             aria-selected="false"
           >
             Monthly Rewards
@@ -36,12 +37,12 @@ const Tabs = ({ transactions, rewards, totals, loading }) => {
 
           <button
             className="nav-link"
-            id="nav-contact-tab"
+            id="nav-total-tab"
             data-bs-toggle="tab"
-            data-bs-target="#nav-contact"
+            data-bs-target="#nav-total"
             type="button"
             role="tab"
-            aria-controls="nav-contact"
+            aria-controls="nav-total"
             aria-selected="false"
           >
             Total Rewards
@@ -49,34 +50,41 @@ const Tabs = ({ transactions, rewards, totals, loading }) => {
         </div>
       </nav>
 
+
       <div className="tab-content mt-3" id="nav-tabContent">
         <div
           className="tab-pane fade show active"
-          id="nav-home"
+          id="nav-transactions"
           role="tabpanel"
-          aria-labelledby="nav-home-tab"
+          aria-labelledby="nav-transactions-tab"
         >
-          <TransactionsTable transactions={transactions} loading={loading}/>
+          <TransactionsTable transactions={transactions} loading={loading} />
         </div>
 
         <div
           className="tab-pane fade"
-          id="nav-profile"
+          id="nav-monthly"
           role="tabpanel"
-          aria-labelledby="nav-profile-tab"
+          aria-labelledby="nav-monthly-tab"
         >
           <MonthlyRewardsTable rewards={rewards} loading={loading} />
         </div>
 
         <div
           className="tab-pane fade"
-          id="nav-contact"
+          id="nav-total"
           role="tabpanel"
-          aria-labelledby="nav-contact-tab"
+          aria-labelledby="nav-total-tab"
         >
-          <TotalRewardsTable totals={totals} loading={loading}/>
+          <TotalRewardsTable totals={totals} loading={loading} />
+        </div>
+
+        <div
+        >
+          <AIAssistant transactions={transactions} />
         </div>
       </div>
+
     </>
   );
 };

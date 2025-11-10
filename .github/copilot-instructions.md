@@ -1,41 +1,45 @@
-## Copilot / AI assistant instructions — rewards-program
+## Quick orientation (what this repo is)
 
-Be brief and focused. This repository is a small Create React App that calculates customer reward points
-from sample transaction JSON files served from `public/`.
+A React single-page app (Create React App) that visualizes a customer rewards program. Data is loaded from local JSON files in `public/` and processed client-side to compute reward points and aggregates.
 
-Key places to read before editing code:
-- `src/App.js` — app entry: fetches `public/mockData*.json` (via `axios.get('/<file>')`), validates transactions, and computes per-transaction reward points using `calculateRewardPoints`.
-- `src/utils/calculatePoints.js` — central logic: `calculatePoints`, `calculateRewardPoints`, `aggregateMonthlyRewards`, `aggregateTotalRewards`. Prefer updating/adding tests here when changing behavior.
-- `src/components/` — UI is split into `Tabs.jsx` (tab container), `TransactionTable.jsx`, `MonthlyRewardsTable.jsx`, `TotalRewardsTable.jsx` (presentational components using PascalCase props and `transactionId` as list key).
-- `public/mockData*.json` — sample inputs. The app fetches these at runtime; don't assume they are imported as JS modules.
+Key entry points
+- `src/App.js` — top-level data flow: fetch dataset from `/mockData*.json`, compute per-transaction reward points, build monthly and total aggregates, pass to `Tabs`.
+- `src/utils/calculatePoints.js` — business logic for points and aggregation helpers. Tests import `calculatePoints` (`src/utils/calculatePoints.test.js`).
+- `src/utils/aiHelper.js` — AI integration wrapper used by `src/components/AiAssistant.js`.
+- `src/components/*` — UI tables and small helpers: `TransactionTable.jsx`, `MonthlyRewardsTable.jsx`, `TotalRewardsTable.jsx`, `AiAssistant.js`, `Tabs.jsx`.
 
-Project-specific patterns & expectations:
-- Data fetching: App expects the JSON files to be available at root (`/mockData1.json` etc). Use `axios.get('/<filename>')` or the same relative fetch pattern.
-- Date handling: code uses `new Date(tx.purchaseDate)` and `toLocaleString('default', { month: 'long' })` to build keys of the form `<customerId>-<Month>-<Year>`.
-- Reward calculations: `calculateRewardPoints(amount)` returns 0 for <=50, `amount-50` for 51–100, and `2*(amount-100)+50` for >100. `calculatePoints` is used by aggregators and is floored to an integer — tests depend on this behavior.
-- Tests: there is a unit test at `src/utils/calculatePoints.test.js` that asserts several numeric cases (120→90, 75→25, etc.). If you change rounding or thresholds, update the test accordingly.
-- Styling: Bootstrap is imported globally in `src/index.js` (CSS + bundle JS). UI uses Bootstrap classes; prefer keeping markup consistent with existing class names.
+How data flows (concrete example)
+- Files in `public/mockData1.json` (and 2..5) are fetched via `axios.get('/mockData1.json')` in `App.js`.
+- Each transaction object has these discoverable fields: `transactionId`, `customerId`, `customerName`, `purchaseDate`, `productPurchased`, `price`.
+- `App.js` adds `rewardPoints` to each transaction using `calculateRewardPoints` and then reduces into two aggregates:
+	- monthly by `customerId-month-year` (see `App.js` reduce logic)
+	- total per customer (`totalRewards` array)
 
-Developer workflows (how to run):
-- Start dev server: `npm start` (CRA default). The app serves `public/` files at `/` so mock JSON is fetched by the code above.
-- Run tests once (non-interactive): in PowerShell use:
-	```powershell
-	$env:CI='true'; npm test -- --watchAll=false
-	```
-	(This runs the Jest suite in single-run CI mode; the interactive watch is the default otherwise.)
+Developer workflows / commands
+- Run dev server: `npm start` (CRA default, serves `public/` so mock JSON files are reachable at `/mockData*.json`).
+- Run tests: `npm test` (tests use Jest via `react-scripts`).
+- Build for production: `npm run build`.
 
-Changes and pull request guidance for AI edits:
-- Keep logic and UI changes small and localized. Update or add unit tests under `src/` whenever you edit behavior in `src/utils`.
-- Use existing prop names and component shapes. For example, `Tabs.jsx` passes `transactions`, `rewards`, and `totals` to child tables; preserve these shapes.
-- When editing data-loading, prefer changing `public/mockData*.json` only for test or mock improvements. Don’t hardcode absolute paths — use the same pattern as `App.js`.
+Project-specific conventions and gotchas
+- Two related functions exist in `src/utils/calculatePoints.js`: `calculatePoints` (used by tests and aggregators) and `calculateRewardPoints` (used in `App.js`). They follow slightly different rounding/behaviour — be careful when modifying the reward logic; update tests accordingly.
+- Naming inconsistencies: monthly aggregation in `App.js` uses `points` while some utility functions use `rewardPoints` or `rewardPoints` properties. When changing shapes, update all consumers (`MonthlyRewardsTable.jsx`, `TotalRewardsTable.jsx`, `Tabs.jsx`).
+- AI integration (security): `src/utils/aiHelper.js` constructs an OpenAI/HuggingFace client and reads `process.env.HF_API_TOKEN`. The client is created with `dangerouslyAllowBrowser: true`, which allows calls from the browser; expect that API keys must be injected at build time. Inspect `AiAssistant.js` for how prompts are constructed (it concatenates transactions into a single context string) — avoid sending very large datasets directly.
 
-Examples to cite in PR descriptions:
-- "Adjusted reward logic in `src/utils/calculatePoints.js` and updated `src/utils/calculatePoints.test.js` to keep behavior consistent (see 120 -> 90 case)."
-- "Modified aggregation keys to use `customerId-month-year` consistent with `App.js` grouping logic."
+Integration points
+- External libs: `axios`, `bootstrap`, `openai`, `@huggingface/inference` (see `package.json`).
+- AI calls: `getAIResponse(prompt)` in `src/utils/aiHelper.js` and used by `src/components/AiAssistant.js`.
 
-If unsure, inspect these files first: `src/App.js`, `src/index.js`, `src/utils/calculatePoints.js`, `src/utils/calculatePoints.test.js`, and `src/components/Tabs.jsx`.
+Common edits & examples
+- Add a new dataset: drop `mockDataX.json` into `public/` and add an `<option value="mockDataX.json">` in `src/App.js` select list.
+- Change the AI model: edit `model` in `src/utils/aiHelper.js` and ensure the required token is available at runtime.
+- Update reward logic: prefer editing `src/utils/calculatePoints.js` and then update `App.js` to consume the canonical function; update `src/utils/calculatePoints.test.js` to lock behaviour.
 
-If you want more guidance or the project adds backend integration, ask for updated instructions that include auth, API schema, and environment variables.
+Tests & lint
+- Tests live next to utils (e.g., `src/utils/calculatePoints.test.js`) and are run via `npm test`.
+- ESLint is configured in `package.json` and via CRA defaults; run `npm start` or your editor's linter integration to see warnings.
 
-— end of repo-specific Copilot instructions
+Where to look first for small tasks
+- Bug: inconsistent field names between aggregators and tables — search for `rewardPoints` vs `points`.
+- Performance: `AiAssistant` serializes all transactions into a single prompt string. For larger datasets, paginate or summarize before calling `getAIResponse`.
 
+If anything above is unclear or you'd like me to change tone/length or include more examples (e.g., exact line numbers or a short migration patch to unify `rewardPoints` naming), tell me which parts to expand.
