@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const TransactionsTable = ({ transactions }) => {
+const TransactionsTable = ({ transactions, loading }) => {
   return (
     <div className="container mt-4">
       <h4 className="text-primary mb-3">Transactions</h4>
@@ -17,7 +17,15 @@ const TransactionsTable = ({ transactions }) => {
           </tr>
         </thead>
         <tbody>
-          {transactions && transactions.map((txn) => (
+          {loading ? (
+          Array.from({ length: 5 }).map((_, i) => (
+            <tr key={i}>
+              <td colSpan="6">
+                <div className="skeleton-row"></div>
+              </td>
+            </tr>
+          ))
+        ) : transactions && transactions.length ? transactions.map((txn) => (
             <tr key={txn.transactionId}>
               <td>{txn.transactionId}</td>
               <td>{txn.customerName}</td>
@@ -26,7 +34,13 @@ const TransactionsTable = ({ transactions }) => {
               <td>{txn.price.toFixed(2)}</td>
               <td>{txn.rewardPoints}</td>
             </tr>
-          ))}
+          )) : (
+          <tr>
+            <td colSpan="5" className="text-center text-muted">
+              No reward points data available.
+            </td>
+          </tr>
+        )}
         </tbody>
       </table>
     </div>
@@ -35,6 +49,7 @@ const TransactionsTable = ({ transactions }) => {
 
 TransactionsTable.propTypes = {
   transactions: PropTypes.array.isRequired,
+  loading: PropTypes.bool
 };
 
 export default TransactionsTable;

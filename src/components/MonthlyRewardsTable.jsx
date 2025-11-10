@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import './skeleton.css'; // We'll create this small CSS file next
 
 const MonthlyRewardsTable = ({ rewards, loading }) => (
   <div className="container mt-4">
@@ -19,8 +18,7 @@ const MonthlyRewardsTable = ({ rewards, loading }) => (
       </thead>
       <tbody>
         {loading ? (
-          // Skeleton loader rows
-          Array.from({ length: 4 }).map((_, i) => (
+          Array.from({ length: 5 }).map((_, i) => (
             <tr key={i}>
               <td colSpan="5">
                 <div className="skeleton-row"></div>
