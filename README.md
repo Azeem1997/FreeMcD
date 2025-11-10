@@ -1,70 +1,86 @@
-# Getting Started with Create React App
+# Customer Rewards Dashboard (React + AI)
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A simple React application that simulates a retailer’s **customer reward points program** — with an added **AI insights feature** powered by Hugging Face.
 
-## Available Scripts
+---
 
-In the project directory, you can run:
+## Features
 
-### `npm start`
+- **Reward Calculation Logic**  
+  Calculates reward points based on each purchase:  
+  - 2 points for every dollar spent over **$100**.  
+  - 1 point for every dollar spent between **$50–$100**.  
+  - Handles fractional prices safely.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- **Data Tables**
+  - **Transactions Table** — lists all purchases with computed reward points.  
+  - **Monthly Rewards Table** — aggregates reward points per month and year.  
+  - **Total Rewards Table** — shows total reward points per customer.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+- **AI Insights**  
+  Uses Hugging Face’s `zephyr-7b-beta` model to generate smart insights about customer behavior and spending patterns.
 
-### `npm test`
+- **Dynamic Data Source**  
+  Select between 5 different mock data sets (`mockData1.json` to `mockData5.json`), each simulating different scenarios (missing values, invalid dates, etc.).
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- **Responsive UI**  
+  Styled with **Bootstrap 5** for clean and mobile-friendly layout.
 
-### `npm run build`
+- **Error & Loading States**  
+  Includes graceful error handling and skeleton loaders for better user experience.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+---
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Tech Stack
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- **Frontend:** React JS (Functional Components, Hooks)
+- **Styling:** Bootstrap 5
+- **API:** Axios (mock data fetching)
+- **AI Integration:** Hugging Face API (`zephyr-7b-beta`)
+- **Testing:** Jest + React Testing Library
 
-### `npm run eject`
+---
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+## Folder Structure
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+src/
+ ├── components/
+ │   ├── Tabs.js
+ │   ├── TransactionsTable.js
+ │   ├── MonthlyRewardsTable.js
+ │   ├── TotalRewardsTable.js
+ ├── utils/
+ │   ├── calculatePoints.js
+ ├── tests/
+ │   ├── calculatePoints.test.js
+ │   ├── monthlyRewards.test.js
+ │   ├── transactionTable.test.js
+ ├── App.js
+ ├── index.js
+public/
+ ├── mockData1.json
+ ├── mockData2.json
+ ├── mockData3.json
+ ├── mockData4.json
+ ├── mockData5.json
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+##  Example Insight (AI Output)
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+> “Jane Smith earned more rewards due to higher-value purchases in February. Consider offering a loyalty bonus to encourage repeated purchases.”
 
-## Learn More
+---
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+##  Deployment
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+The app is deployed on **Vercel**:  
+https://free-mc-o9wljbr3r-azeem1997s-projects.vercel.app/
 
-### Code Splitting
+---
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+## Author
 
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+**S Azeem**  
+Frontend Developer | React.js  
+azeem.s@infosys.com
+https://github.com/Azeem1997/FreeMcD
