@@ -8,18 +8,19 @@ export const calculatePoints = (amount) => {
   return Math.floor(points);
 };
 
-export function calculateRewardPoints(amount) {
-  if (!amount || amount <= 0) return 0;
+export const calculateRewardPoints = (price) => {
+  if (!price || isNaN(price)) return 0;
+
   let points = 0;
-  if (amount > 100) {
-    points += (amount - 100) * 2;
-    amount = 100;
+  if (price > 100) {
+    points += (price - 100) * 2 + 50;
+  } else if (price > 50) {
+    points += price - 50;
   }
-  if (amount > 50) {
-    points += (amount - 50) * 1;
-  }
-  return Math.round(points);
+
+  return Math.floor(points);
 }
+
 
 
 // Group transactions by customer, month, and year
