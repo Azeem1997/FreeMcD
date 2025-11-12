@@ -1,4 +1,3 @@
-import React from "react";
 import TransactionsTable from "./TransactionTable";
 import MonthlyRewardsTable from "./MonthlyRewardsTable";
 import TotalRewardsTable from "./TotalRewardsTable";
