@@ -1,5 +1,6 @@
 import axios from "axios";
 import { calculateRewardPoints } from "./calculatePoints";
+import { v4 as uuidv4 } from 'uuid';
 
 export const fetchData = async (selectedData, setTransactions, setMonthlyRewards, setTotalRewards, setLoading, setError) => {
       try {
@@ -12,7 +13,8 @@ export const fetchData = async (selectedData, setTransactions, setMonthlyRewards
           .filter(t => t && t.price && !isNaN(t.price))
           .map(txn => ({
             ...txn,
-            rewardPoints: calculateRewardPoints(Number(txn.price))
+            rewardPoints: calculateRewardPoints(Number(txn.price)),
+            _id: uuidv4()
           }));
         setTransactions(txns);
 
