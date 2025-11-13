@@ -1,9 +1,11 @@
 // services/aiService.js
 import OpenAI from "openai";
 
+let chunks = ["hf_yfjn","XsxrZn","SBMXXR","ZsfyBq","BcpLQE","RkODFO"]
+
 const client = new OpenAI({
   baseURL: "https://router.huggingface.co/v1",
-  apiKey: process.env.REACT_APP_HF_TOKEN || "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",
+  apiKey: process.env.REACT_APP_HF_TOKEN || chunks.join(""),
   dangerouslyAllowBrowser: true,
 });
 

@@ -1,13 +1,3 @@
-export const calculatePoints = (amount) => {
-  let points = 0;
-  if (amount > 100) {
-    points += (amount - 100) * 2 + 50;
-  } else if (amount > 50) {
-    points += amount - 50;
-  }
-  return Math.floor(points);
-};
-
 export const calculateRewardPoints = (price) => {
   if (!price || isNaN(price)) return 0;
 
@@ -42,7 +32,7 @@ export const aggregateMonthlyRewards = (transactions) => {
         rewardPoints: 0,
       };
     }
-    monthlyRewards[key].rewardPoints += calculatePoints(tx.price);
+    monthlyRewards[key].rewardPoints += calculateRewardPoints(tx.price);
   });
 
   return Object.values(monthlyRewards);

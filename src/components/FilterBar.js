@@ -30,7 +30,6 @@ const FilterBar = ({ onFilter, onReset }) => {
 
     return (
        <Grid container spacing={3} className="filter-bar">
-    {/* Row 1 - Heading */}
     <Grid item xs={12} size={12}>
         <Typography variant="h5" fontWeight="bold">
             Filter User Transactions
@@ -62,7 +61,6 @@ const FilterBar = ({ onFilter, onReset }) => {
         />
     </Grid>
 
-    {/* Row 5 - Buttons aligned right */}
     <Grid item xs={12} size={12}>
         <Box display="flex" justifyContent="center" gap={2}>
             <Button

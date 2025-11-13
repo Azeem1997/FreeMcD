@@ -1,86 +1,149 @@
-# Customer Rewards Dashboard (React + AI)
+# 🏆 Customer Rewards Dashboard
 
-A simple React application that simulates a retailer’s **customer reward points program** — with an added **AI insights feature** powered by Hugging Face.
-
----
-
-## Features
-
-- **Reward Calculation Logic**  
-  Calculates reward points based on each purchase:  
-  - 2 points for every dollar spent over **$100**.  
-  - 1 point for every dollar spent between **$50–$100**.  
-  - Handles fractional prices safely.
-
-- **Data Tables**
-  - **Transactions Table** — lists all purchases with computed reward points.  
-  - **Monthly Rewards Table** — aggregates reward points per month and year.  
-  - **Total Rewards Table** — shows total reward points per customer.
-
-- **AI Insights**  
-  Uses Hugging Face’s `zephyr-7b-beta` model to generate smart insights about customer behavior and spending patterns.
-
-- **Dynamic Data Source**  
-  Select between 5 different mock data sets (`mockData1.json` to `mockData5.json`), each simulating different scenarios (missing values, invalid dates, etc.).
-
-- **Responsive UI**  
-  Styled with **Bootstrap 5** for clean and mobile-friendly layout.
-
-- **Error & Loading States**  
-  Includes graceful error handling and skeleton loaders for better user experience.
+A React-based interactive dashboard for managing and analyzing customer reward points.  
+It features a filterable data table, reward point summaries, and an AI Insights Assistant powered by OpenAI.  
+This project also includes Jest + React Testing Library for component-level testing.
 
 ---
 
-## Tech Stack
+## 🚀 Features
 
-- **Frontend:** React JS (Functional Components, Hooks)
-- **Styling:** Bootstrap 5
-- **API:** Axios (mock data fetching)
-- **AI Integration:** Hugging Face API (`zephyr-7b-beta`)
-- **Testing:** Jest + React Testing Library
+✅ Interactive Dashboard for viewing customer transactions and reward summaries  
+✅ Filter Bar to search by name, product, and date range  
+✅ Paginated Table with sorting and search  
+✅ AI Assistant that answers queries about the transaction data  
+✅ Data fetched from mock JSON files or an API  
+✅ Responsive UI built with Material UI (MUI)  
+✅ Unit Tests for all components using Jest & React Testing Library  
+✅ High Code Coverage (≈80%)
 
 ---
 
-## Folder Structure
+## 🧱 Tech Stack
 
-src/
- ├── components/
- │   ├── Tabs.js
- │   ├── TransactionsTable.js
- │   ├── MonthlyRewardsTable.js
- │   ├── TotalRewardsTable.js
- ├── utils/
- │   ├── calculatePoints.js
- ├── tests/
- │   ├── calculatePoints.test.js
- │   ├── monthlyRewards.test.js
- │   ├── transactionTable.test.js
- ├── App.js
- ├── index.js
-public/
- ├── mockData1.json
- ├── mockData2.json
- ├── mockData3.json
- ├── mockData4.json
- ├── mockData5.json
+| Category | Technology |
+|-----------|-------------|
+| Frontend | React 18+, Material UI, Day.js |
+| AI | OpenAI API (or HuggingFace API key) |
+| Testing | Jest, React Testing Library |
+| Build Tool |Create React App |
+| Date Handling | Day.js |
+| Utils | Axios, Custom helper functions |
+
+---
+
+## 📦 Project Setup
+
+### 1️⃣ Clone the Repository
+```bash
+git clone https://github.com/Azeem1997/FreeMcD-main.git
+cd FreeMcD-main
 ```
 
-##  Example Insight (AI Output)
+### 2️⃣ Install Dependencies
+```bash
+npm install
+```
 
-> “Jane Smith earned more rewards due to higher-value purchases in February. Consider offering a loyalty bonus to encourage repeated purchases.”
+### 4️⃣ Run the App
+```bash
+npm start
+```
+The app will open at: http://localhost:3000
 
 ---
 
-##  Deployment
+## 🧩 Project Structure
 
-The app is deployed on **Vercel**:  
-https://free-mc-o9wljbr3r-azeem1997s-projects.vercel.app/
+FreeMcD-main/
+│
+├── src/
+│   ├── components/
+│   │   ├── DashboardTabs.js
+│   │   ├── FilterBar.js
+│   │   ├── TableWrapper.js
+│   │   ├── MonthlyRewardsTable.js
+│   │   ├── TotalRewardstable.js
+│   ├   ├── Transactiontable.js
+│   │   ├── Dashboard.js
+│   │   └── AIAssistant.js
+│   │── __tests__/ (All Jest test files)
+│   ├── utils/
+│   │   ├── fetchRewardsData.js
+│   │   ├── aiHelper.js
+│   │   ├── calculatePoints.js
+│   │   ├── commonUtils.js
+│   ├── App.js
+│   └── index.js
+│
+├── public/
+│   ├── index.html
+│   └── logo.png
+│   │
+│   └── mockData1.json
+│
+├── package.json
+├── .env
+└── README.md
 
 ---
 
-## Author
+### 🪟 Dashboard
+- Loads mock data using `fetchData()`.
+- Calculates monthly and total reward points.
+- Displays charts and tables.
 
+### 🎚 FilterBar
+- Filters by name, product, and date range dynamically.
+
+### 💬 AI Assistant
+- Uses transactions as context and queries OpenAI API.
+
+### 🧮 TableWrapper (HOC)
+- Handles sorting, filtering, and pagination.
+![Dashboard Screenshot](./src/assets/FILTER.png)
+![Dashboard Screenshot](./src/assets/TRANSACTION.png)
+
+---
+
+## 🧪 Testing
+
+Run all tests:
+```bash
+npm test
+```
+Run coverage:
+```bash
+npm test -- --coverage
+```
+![Dashboard Test Coverage Screenshot](./src/assets/TEST.png)
+---
+
+## 🧰 Utilities
+
+- `fetchRewardsData.js` — Fetches mock/live data.
+- `aiHelper.js` — Handles AI API securely.
+
+---
+
+## 📊 Example Output
+
+Dashboard includes:
+- Total rewards summary
+- Monthly rewards chart
+- Filterable transaction table
+- AI Insights Assistant
+
+---
+
+## ⚙️ Build for Production
+```bash
+npm run build
+```
+
+---
+
+## 🧑‍💻 Author
 **S Azeem**  
-Frontend Developer | React.js  
-azeem.s@infosys.com
-https://github.com/Azeem1997/FreeMcD
+
+---
