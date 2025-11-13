@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Grid, TextField, Button, Typography } from "@mui/material";
+import { Grid, TextField, Button, Typography, Box } from "@mui/material";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 
 const FilterBar = ({ onFilter, onReset }) => {
@@ -29,57 +29,61 @@ const FilterBar = ({ onFilter, onReset }) => {
     };
 
     return (
-        <Grid container spacing={4} alignItems="center" className="filter-bar">
-            <Typography variant="h5">
-                Filters for User Transactions
-            </Typography>
-            <Grid item xs={12} sm={4}>
-                <TextField
-                    label="Customer Name"
-                    variant="outlined"
-                    fullWidth
-                    value={filters.name}
-                    onChange={(e) => handleChange("name", e.target.value)}
-                />
-            </Grid>
+       <Grid container spacing={3} className="filter-bar">
+    {/* Row 1 - Heading */}
+    <Grid item xs={12} size={12}>
+        <Typography variant="h5" fontWeight="bold">
+            Filter User Transactions
+        </Typography>
+    </Grid>
+    <Grid item xs={12} size={4}>
+        <TextField
+            label="Customer Name"
+            variant="outlined"
+            fullWidth
+            value={filters.name}
+            onChange={(e) => handleChange("name", e.target.value)}
+        />
+    </Grid>
+    <Grid item xs={12} size={4}>
+        <DatePicker
+            label="From Date"
+            value={filters.fromDate}
+            onChange={(newValue) => handleChange("fromDate", newValue)}
+            slotProps={{ textField: { fullWidth: true } }}
+        />
+    </Grid>
+    <Grid item xs={12} size={4}>
+        <DatePicker
+            label="To Date"
+            value={filters.toDate}
+            onChange={(newValue) => handleChange("toDate", newValue)}
+            slotProps={{ textField: { fullWidth: true } }}
+        />
+    </Grid>
 
-            <Grid item xs={12} sm={3}>
-                <DatePicker
-                    label="From Date"
-                    value={filters.fromDate}
-                    onChange={(newValue) => handleChange("fromDate", newValue)}
-                    slotProps={{ textField: { fullWidth: true } }}
-                />
-            </Grid>
+    {/* Row 5 - Buttons aligned right */}
+    <Grid item xs={12} size={12}>
+        <Box display="flex" justifyContent="center" gap={2}>
+            <Button
+                variant="contained"
+                color="primary"
+                onClick={handleSearch}
+            >
+                Search
+            </Button>
+            <Button
+                variant="outlined"
+                color="secondary"
+                onClick={handleReset}
+            >
+                Reset
+            </Button>
+        </Box>
+    </Grid>
+</Grid>
 
-            <Grid item xs={12} sm={3}>
-                <DatePicker
-                    label="To Date"
-                    value={filters.toDate}
-                    onChange={(newValue) => handleChange("toDate", newValue)}
-                    slotProps={{ textField: { fullWidth: true } }}
-                />
-            </Grid>
 
-            <Grid item xs={12} sm={2} className="filter-buttons" gap={2}>
-                <Button
-                    variant="contained"
-                    color="primary"
-                    fullWidth
-                    onClick={handleSearch}
-                >
-                    Search
-                </Button>
-                <Button
-                    variant="outlined"
-                    color="secondary"
-                    fullWidth
-                    onClick={handleReset}
-                >
-                    Reset
-                </Button>
-            </Grid>
-        </Grid>
     );
 };
 
