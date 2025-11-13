@@ -1,10 +1,11 @@
 import { useEffect, useState, useMemo } from "react";
-import Tabs from "../components/Tabs";
+import DashboardTabs from "../components/DashboardTabs";
 import FilterBar from "../components/FilterBar";
 import { fetchData } from "../utils/fetchRewardsData";
 import dayjs from "dayjs";
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import AIAssistant from "./AiAssistant";
 
 export default function Dashboard() {
     const [transactions, setTransactions] = useState([]);
@@ -69,12 +70,14 @@ export default function Dashboard() {
 
                 <FilterBar onFilter={handleFilter} onReset={handleReset} />
 
-                <Tabs
+                <DashboardTabs
                     transactions={filteredTransactions}
                     rewards={monthlyRewards}
                     totals={totalRewards}
                     loading={loading}
                 />
+
+                <AIAssistant transactions={filteredTransactions} />
             </LocalizationProvider>
         </div>
     );
