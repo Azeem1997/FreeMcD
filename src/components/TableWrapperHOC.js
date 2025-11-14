@@ -91,7 +91,7 @@ const TableWrapper = ({ title, colorClass, columns, data, loading }) => {
     const paginatedData = useMemo(() => {
         return sortedData.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage);
     }, [sortedData, page, rowsPerPage]);
-    const emptyRows = rowsPerPage - Math.min(rowsPerPage, data && data.length - page * rowsPerPage);
+    // const emptyRows = rowsPerPage - Math.min(rowsPerPage, data && data.length - page * rowsPerPage);
 
     return (
         <div>
@@ -157,11 +157,11 @@ const TableWrapper = ({ title, colorClass, columns, data, loading }) => {
                                 </TableRow>
                             )}
 
-                            {emptyRows > 0 && !loading && (
+                            {/* {emptyRows > 0 && !loading && (
                                 <TableRow className="empty-row">
                                     <TableCell colSpan={columns && columns.length} />
                                 </TableRow>
-                            )}
+                            )} */}
                         </TableBody>
                     </Table>
                 </TableContainer>

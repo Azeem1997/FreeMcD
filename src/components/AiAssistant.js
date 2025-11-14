@@ -10,29 +10,20 @@ const AIAssistant = ({ transactions }) => {
         if (!prompt.trim()) return;
         setLoading(true);
 
-        const context = JSON.stringify(
-            transactions.map((t) => ({
-                customer: t.customerName || "Unknown",
-                product: t.productPurchased || "Unknown Product",
-                amount: Number(t.price || 0),
-                date: t.purchaseDate || "Unknown Date",
-            })),
-            null,
-            2
-        );
+        const context = transactions
+            .map(
+                (t) =>
+                    `"${t.customerName} bought ${t.productPurchased} for $${t.price} on ${t.purchaseDate} with ${t.rewardPoints} points."`
+            )
+            .join("\n");
 
         const finalPrompt = `You are an AI assistant analyzing reward program data.Below is the JSON data for all transactions:
                         ${context}
 
-        User question: ${prompt}
+        User question Is: ${prompt}
 
-        Please analyze the data and respond clearly and briefly using the context and.
+        Please analyze the data and respond clearly in 30 words and briefly using the context and.
         If the answer is not directly available, say "Not available in data."
-        Instructions:
-        - Respond only in simple words or sentences.
-        - Do NOT return JSON, code, or objects.
-        - Do NOT include [CODE], [USER], [/ASS], [/USER] or any tags.
-        - Just give a short, clear answer in plain text not more than 30 words.
         `;
         const response = await getAIResponse(finalPrompt);
         setAnswer(response);
