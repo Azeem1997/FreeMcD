@@ -1,3 +1,54 @@
+/**
+ * Calculates reward points based on a purchase price
+ * 
+ * Implements the reward tier system:
+ * - $0-50: 0 points
+ * - $50-100: 1 per dollar (price - 50)
+ * - $100+: Base 50 points + 2 per dollar above $100
+ * 
+ * @function
+ * @param {number} price - The purchase price in dollars
+ * @returns {number} The calculated reward points (floored integer)
+ * @example
+ * calculateRewardPoints(75);   // Returns 25 (75 - 50)
+ * calculateRewardPoints(150);  // Returns 150 (50 + (150-100)*2)
+ */
+
+/**
+ * Aggregates transactions into monthly rewards by customer
+ * 
+ * Groups transactions by customerId, month, and year, summing up reward points
+ * for each combination. Returns an array of monthly reward aggregates.
+ * 
+ * @function
+ * @param {Array<Object>} transactions - Array of transaction objects
+ * @param {number} transactions[].customerId - Customer identifier
+ * @param {string} transactions[].customerName - Customer name
+ * @param {string} transactions[].purchaseDate - Date of purchase (ISO string or valid date format)
+ * @param {number} transactions[].price - Purchase price
+ * @returns {Array<Object>} Array of monthly reward objects with structure:
+ *   - {number} customerId - Customer identifier
+ *   - {string} name - Customer name
+ *   - {string} month - Month name (e.g., "January")
+ *   - {number} year - Year of transaction
+ *   - {number} rewardPoints - Total points for that month
+ */
+
+/**
+ * Aggregates monthly rewards into total rewards per customer
+ * 
+ * Sums up all reward points for each customer across all months.
+ * 
+ * @function
+ * @param {Array<Object>} monthlyRewards - Array of monthly reward objects
+ * @param {string} monthlyRewards[].name - Customer name
+ * @param {number} monthlyRewards[].rewardPoints - Points for that month
+ * @returns {Array<Object>} Array of total reward objects with structure:
+ *   - {string} name - Customer name
+ *   - {number} rewardPoints - Total accumulated points
+ */
+
+
 export const calculateRewardPoints = (price) => {
   if (!price || isNaN(price)) return 0;
 

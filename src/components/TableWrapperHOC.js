@@ -17,6 +17,32 @@ import {
 import '../styles/tableWrapper.scss';
 import debounce from 'lodash.debounce';
 
+/**
+ * TableWrapper (Higher-Order Component) - Reusable data table with advanced features
+ * 
+ * Provides a feature-rich table component with:
+ * - Column-based sorting (ascending/descending)
+ * - Real-time filtering with debounced input
+ * - Pagination (configurable rows per page: 5, 10, 25)
+ * - Loading state with skeleton loaders
+ * - Custom cell rendering via render functions
+ * - Responsive design with Material-UI components
+ * 
+ * Used throughout the application for displaying transactions, monthly rewards, and totals.
+ * 
+ * @component
+ * @param {Object} props - Component props
+ * @param {string} props.title - Table title displayed above the table
+ * @param {string} [props.colorClass] - CSS class for styling (e.g., 'success', 'warning')
+ * @param {Array<Object>} props.columns - Column definitions
+ * @param {string} props.columns[].field - Data field name (key in row object)
+ * @param {string} props.columns[].headerName - Display name for column header
+ * @param {string} [props.columns[].align] - Text alignment ('left', 'center', 'right')
+ * @param {Function} [props.columns[].render] - Custom render function: (row) => JSX
+ * @param {Array<Object>} props.data - Array of row objects
+ * @param {boolean} [props.loading=false] - Loading state flag
+ * @returns {React.ReactElement} Data table with all interactive features
+ */
 const TableWrapper = ({ title, colorClass, columns, data, loading }) => {
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(5);
@@ -31,6 +57,11 @@ const TableWrapper = ({ title, colorClass, columns, data, loading }) => {
         }));
     };
 
+    /**
+     * Debounced filter update (500ms delay)
+     * Prevents excessive re-renders during filter input
+     * @type {Function}
+     */
     const updateFilters = useMemo(
         () =>
             debounce((updatedFilters) => {
@@ -39,12 +70,27 @@ const TableWrapper = ({ title, colorClass, columns, data, loading }) => {
         []
     );
 
+    /**
+     * Handles filter input changes
+     * Updates local state immediately, debounces filter application
+     * @param {string} field - The column field to filter
+     * @param {string} value - The filter value
+     */
     const handleFilterChange = (field, value) => {
         const updatedLocal = { ...localFilters, [field]: value };
         setLocalFilters(updatedLocal);
         updateFilters(updatedLocal);
     };
 
+    /**
+     * Memoized filtered data
+     * Applies column-wise filters with type-aware matching:
+     * - Dates: compared as localized date strings
+     * - Numbers: converted to string for substring matching
+     * - Strings: case-insensitive substring matching
+     * 
+     * @type {Array<Object>}
+     */
     const filteredData = useMemo(() => {
         return data.filter((row) =>
             columns.every((col) => {
@@ -68,7 +114,13 @@ const TableWrapper = ({ title, colorClass, columns, data, loading }) => {
         );
     }, [data, filters, columns]);
 
-
+    /**
+     * Memoized sorted data
+     * Sorts filtered data by current sort configuration.
+     * Falls back to filtered data if no sort field specified.
+     * 
+     * @type {Array<Object>}
+     */
     const sortedData = useMemo(() => {
         if (!sortConfig.field) return filteredData;
         return [...filteredData].sort((a, b) => {
@@ -82,16 +134,32 @@ const TableWrapper = ({ title, colorClass, columns, data, loading }) => {
         });
     }, [filteredData, sortConfig]);
 
+    /**
+     * Handles page navigation
+     * @param {Event} event - Change event
+     * @param {number} newPage - New page number
+     */
     const handleChangePage = (event, newPage) => setPage(newPage);
+
+    /**
+     * Handles rows per page selection
+     * Resets page to 0 when changing rows per page
+     * @param {Event} event - Change event
+     */
     const handleChangeRowsPerPage = (event) => {
         setRowsPerPage(parseInt(event.target.value, 10));
         setPage(0);
     };
 
+    /**
+     * Memoized paginated data
+     * Returns slice of sorted data for current page
+     * 
+     * @type {Array<Object>}
+     */
     const paginatedData = useMemo(() => {
         return sortedData.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage);
     }, [sortedData, page, rowsPerPage]);
-    // const emptyRows = rowsPerPage - Math.min(rowsPerPage, data && data.length - page * rowsPerPage);
 
     return (
         <div>
