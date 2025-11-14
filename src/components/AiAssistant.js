@@ -1,11 +1,41 @@
 import React, { useState } from "react";
 import { getAIResponse } from "../utils/aiHelper";
 
+/**
+ * AIAssistant - AI-powered insights component for transaction analysis
+ * 
+ * Allows users to ask natural language questions about the reward program data.
+ * Sends transaction context to the AI model along with user queries, and displays
+ * AI-generated responses.
+ * 
+ * Features:
+ * - Ask questions in natural language
+ * - AI analyzes transaction data for insights
+ * - Shows loading state while processing
+ * - Displays AI responses in an alert box
+ * 
+ * @component
+ * @param {Object} props - Component props
+ * @param {Array<Object>} props.transactions - Array of transaction objects to analyze
+ * @returns {React.ReactElement} AI assistant UI with input and response display
+ * 
+ * @example
+ * <AIAssistant transactions={filteredTransactions} />
+ */
 const AIAssistant = ({ transactions }) => {
     const [prompt, setPrompt] = useState("");
     const [answer, setAnswer] = useState("");
     const [loading, setLoading] = useState(false);
 
+    /**
+     * Sends prompt to AI and retrieves response
+     * 
+     * Constructs context from transactions, combines with user prompt,
+     * and sends to AI for analysis. Updates answer state with response.
+     * 
+     * @async
+     * @function
+     */
     const handleAsk = async () => {
         if (!prompt.trim()) return;
         setLoading(true);

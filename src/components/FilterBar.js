@@ -2,6 +2,28 @@ import { useState } from "react";
 import { Grid, TextField, Button, Typography, Box } from "@mui/material";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 
+/**
+ * FilterBar - Provides filter controls for transaction data
+ * 
+ * Allows users to filter transactions by:
+ * - Customer name (text search)
+ * - Product name (text search)
+ * - Date range (from and to dates)
+ * 
+ * Provides Search and Reset buttons to apply or clear filters.
+ * 
+ * @component
+ * @param {Object} props - Component props
+ * @param {Function} props.onFilter - Callback invoked when Search is clicked with filter values
+ * @param {Function} props.onReset - Callback invoked when Reset is clicked
+ * @returns {React.ReactElement} Filter UI with input fields and action buttons
+ * 
+ * @example
+ * <FilterBar 
+ *   onFilter={(filters) => setFilters(filters)}
+ *   onReset={() => setFilters({})}
+ * />
+ */
 const FilterBar = ({ onFilter, onReset }) => {
     const [filters, setFilters] = useState({
         name: "",
@@ -10,6 +32,11 @@ const FilterBar = ({ onFilter, onReset }) => {
         toDate: null,
     });
 
+    /**
+     * Updates a specific filter field
+     * @param {string} field - The filter field name (name, product, fromDate, toDate)
+     * @param {*} value - The new value for the field
+     */
     const handleChange = (field, value) => {
         setFilters((prev) => ({ ...prev, [field]: value }));
     };

@@ -10,6 +10,19 @@ import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import { useState } from "react";
 
+/**
+ * TabPanel - Renders content for a specific tab
+ * 
+ * Only displays content when the tab is active (value === index).
+ * Provides accessibility attributes for screen readers.
+ * 
+ * @component
+ * @param {Object} props - Component props
+ * @param {React.ReactNode} props.children - Content to display when tab is active
+ * @param {number} props.value - Current active tab index
+ * @param {number} props.index - This tab's index
+ * @returns {React.ReactElement} The tab panel container
+ */
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -36,6 +49,16 @@ TabPanel.propTypes = {
   value: PropTypes.number.isRequired,
 };
 
+/**
+ * Generates accessibility properties for tab elements
+ * 
+ * Creates id and aria-controls attributes for tab elements to ensure
+ * proper screen reader support and accessibility.
+ * 
+ * @function
+ * @param {number} index - The tab index
+ * @returns {Object} Object with id and aria-controls properties
+ */
 function a11yProps(index) {
   return {
     id: `full-width-tab-${index}`,
@@ -43,6 +66,24 @@ function a11yProps(index) {
   };
 }
 
+/**
+ * DashboardTabs - Tabbed interface for viewing different reward data
+ * 
+ * Provides three main tabs:
+ * 1. Transactions - View all individual transactions with reward calculations
+ * 2. Monthly Rewards - Aggregated rewards by customer and month
+ * 3. Total Rewards - Total accumulated rewards per customer
+ * 
+ * Manages tab switching state and passes relevant data to child table components.
+ * 
+ * @component
+ * @param {Object} props - Component props
+ * @param {Array<Object>} props.transactions - Array of transaction objects
+ * @param {Array<Object>} props.rewards - Array of monthly reward objects
+ * @param {Array<Object>} props.totals - Array of total reward objects per customer
+ * @param {boolean} props.loading - Loading state indicator
+ * @returns {React.ReactElement} Tabbed interface with data tables
+ */
 export default function DashboardTabs({ transactions, rewards, totals, loading }) {
   const theme = useTheme();
   const [value, setValue] = useState(0);

@@ -7,6 +7,26 @@ import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import AIAssistant from "./AiAssistant";
 
+/**
+ * Dashboard - Main data management and UI orchestration component
+ * 
+ * Responsible for:
+ * - Fetching and loading transaction data from mock data files
+ * - Managing application state for transactions, monthly rewards, and total rewards
+ * - Providing filtering capabilities for transactions by customer name, product, and date range
+ * - Rendering the complete dashboard with tabs for different data views
+ * - Integrating the AI assistant for insights
+ * 
+ * @component
+ * @returns {React.ReactElement} The dashboard UI with data visualization and filtering
+ * 
+ * @example
+ * // In App.js
+ * import Dashboard from './components/Dashboard';
+ * export default function App() {
+ *   return <Dashboard />;
+ * }
+ */
 export default function Dashboard() {
     const [transactions, setTransactions] = useState([]);
     const [monthlyRewards, setMonthlyRewards] = useState([]);
@@ -17,8 +37,8 @@ export default function Dashboard() {
     const selectedData = "mockData1.json";
 
     useEffect(() => {
-        const fetchDataAsync = async (selectedData) => {
-            await fetchData(
+        const fetchDataAsync = (selectedData) => {
+            fetchData(
                 selectedData,
                 setTransactions,
                 setMonthlyRewards,
@@ -34,10 +54,20 @@ export default function Dashboard() {
         setFilters(filterValues);
     };
 
+    /**
+     * Resets all applied filters
+     */
     const handleReset = () => {
         setFilters({});
     };
 
+    /**
+     * Memoized filtered transactions based on current filter state
+     * Filters by:
+     * - Customer name (case-insensitive partial match)
+     * - Product (case-insensitive partial match)
+     * - Purchase date range (from and to dates)
+     */
     const filteredTransactions = useMemo(() => {
         return transactions.filter((row) => {
             const nameMatch = filters.name
